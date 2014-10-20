@@ -1,0 +1,113 @@
+<shapes>
+   <!-- flowchart.xml -->
+   <shape name="Card" h="60" w="98" aspect="variable" strokewidth="inherit">
+      <connections>
+         <constraint x="0.5" y="0" perimeter="0" name="N" />
+         <constraint x="0.5" y="1" perimeter="0" name="S" />
+         <constraint x="0" y="0.5" perimeter="0" name="W" />
+         <constraint x="1" y="0.5" perimeter="0" name="E" />
+         <constraint x="0.1" y="0.16" perimeter="0" name="NW" />
+         <constraint x="0.015" y="0.98" perimeter="0" name="SW" />
+         <constraint x="0.985" y="0.02" perimeter="0" name="NE" />
+         <constraint x="0.985" y="0.98" perimeter="0" name="SE" />
+      </connections>
+      <background>
+         <path>
+            <move x="19" y="0" />
+            <line x="93" y="0" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="98" y="5" />
+            <line x="98" y="55" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="93" y="60" />
+            <line x="5" y="60" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="0" y="55" />
+            <line x="0" y="20" />
+            <line x="19" y="0" />
+            <close />
+         </path>
+      </background>
+      <foreground>
+         <fillstroke />
+      </foreground>
+   </shape>
+   <!-- basic.xml -->
+   <shape name="PaperTape" h="61.81" w="98" aspect="variable" strokewidth="inherit">
+      <connections>
+         <constraint x="0.5" y="0.09" perimeter="0" name="N" />
+         <constraint x="0.5" y="0.91" perimeter="0" name="S" />
+         <constraint x="0" y="0.5" perimeter="0" name="W" />
+         <constraint x="1" y="0.5" perimeter="0" name="E" />
+         <constraint x="0" y="0.09" perimeter="0" name="NW" />
+         <constraint x="0" y="0.91" perimeter="0" name="SW" />
+         <constraint x="1" y="0.09" perimeter="0" name="NE" />
+         <constraint x="1" y="0.91" perimeter="0" name="SE" />
+      </connections>
+      <background>
+         <path>
+            <move x="0" y="5.9" />
+            <arc rx="70" ry="70" x-axis-rotation="0" large-arc-flag="0" sweep-flag="0" x="49" y="5.9" />
+            <arc rx="70" ry="70" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="98" y="5.9" />
+            <line x="98" y="55.9" />
+            <arc rx="70" ry="70" x-axis-rotation="0" large-arc-flag="0" sweep-flag="0" x="49" y="55.9" />
+            <arc rx="70" ry="70" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="0" y="55.9" />
+            <line x="0" y="5.9" />
+            <close />
+         </path>
+      </background>
+      <foreground>
+         <fillstroke />
+      </foreground>
+   </shape>
+   <!-- flowchart.xml -->
+   <shape name="ManualInput" h="60" w="98.05" aspect="variable" strokewidth="inherit">
+      <connections>
+         <constraint x="0.5" y="0.195" perimeter="0" name="N" />
+         <constraint x="0.5" y="1" perimeter="0" name="S" />
+         <constraint x="0" y="0.5" perimeter="0" name="W" />
+         <constraint x="1" y="0.5" perimeter="0" name="E" />
+         <constraint x="0.02" y="0.985" perimeter="0" name="SW" />
+         <constraint x="0.98" y="0.015" perimeter="0" name="NE" />
+         <constraint x="0.98" y="0.985" perimeter="0" name="SE" />
+      </connections>
+      <background>
+         <path>
+            <move x="0" y="25" />
+            <line x="93" y="0" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="98" y="5" />
+            <line x="98" y="55" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="94" y="60" />
+            <line x="5" y="60" />
+            <arc rx="5" ry="5" x-axis-rotation="0" large-arc-flag="0" sweep-flag="1" x="0" y="55" />
+            <line x="0" y="25" />
+            <close />
+         </path>
+      </background>
+      <foreground>
+         <fillstroke />
+      </foreground>
+   </shape>
+   <!-- basic.xml -->
+   <shape name="Octagon" h="98" w="98" aspect="variable" strokewidth="inherit">
+      <connections>
+         <constraint x="0.5" y="0" perimeter="0" name="N" />
+         <constraint x="0.5" y="1" perimeter="0" name="S" />
+         <constraint x="0" y="0.5" perimeter="0" name="W" />
+         <constraint x="1" y="0.5" perimeter="0" name="E" />
+      </connections>
+      <background>
+         <path>
+            <move x="0" y="29" />
+            <line x="29" y="0" />
+            <line x="69" y="0" />
+            <line x="98" y="29" />
+            <line x="98" y="69" />
+            <line x="69" y="98" />
+            <line x="29" y="98" />
+            <line x="0" y="69" />
+            <close />
+         </path>
+      </background>
+      <foreground>
+         <fillstroke />
+      </foreground>
+   </shape>
+</shapes>
