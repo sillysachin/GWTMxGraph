@@ -2,43 +2,53 @@ package com.appbootup.explore.gwt.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
 
-public class GWTGraph extends Composite
-{
+public class GWTGraph extends Composite {
 	LayoutPanel divWrapper = new LayoutPanel();
 
-	public GWTGraph()
-	{
-		divWrapper.getElement().setId( "graphContainer" );
-		initWidget( divWrapper );
+	public GWTGraph() {
+		setId(Document.get().createUniqueId());
+		initWidget(divWrapper);
 	}
 
-	public native void drawGraph( String graphContainer )/*-{
+	private void setId(String id) {
+		divWrapper.getElement().setId(id);
+	}
+
+	private String getId() {
+		return divWrapper.getElement().getId();
+	}
+
+	@Override
+	protected void onLoad() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			public void execute() {
+				drawGraph(getId());
+			}
+		});
+	}
+
+	public native void drawGraph(String graphContainer)/*-{
 		function main(container) {
 			// Checks if the browser is supported
 			if (!$wnd.mxClient.isBrowserSupported()) {
 				// Displays an error message if the browser is not supported.
 				$wnd.mxUtils.error('Browser is not supported!', 200, false);
 			} else {
-				alert('0');
 				// Disables the built-in context menu
 				$wnd.mxEvent.disableContextMenu(container);
-				alert('1');
 				// Creates the graph inside the given container
 				var graph = new $wnd.mxGraph(container);
-				alert('2');
 				// Enables rubberband selection
 				new $wnd.mxRubberband(graph);
-				alert('3');
 				// Gets the default parent for inserting new cells. This
 				// is normally the first child of the root (ie. layer 0).
 				var parent = graph.getDefaultParent();
-				alert('4');
 				// Adds cells to the model in a single step
 				graph.getModel().beginUpdate();
-				alert('5');
 				try {
 					var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20,
 							80, 30);
@@ -51,8 +61,7 @@ public class GWTGraph extends Composite
 				}
 			}
 		}
-		var element = document.getElementById('htmlGraphContainer');
-		alert(element);
+		var element = $doc.getElementById(graphContainer);
 		main(element);
 	}-*/;
 }
