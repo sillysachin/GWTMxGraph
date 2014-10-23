@@ -66,7 +66,7 @@ public class GWTGraph extends Composite {
 				graph.getModel().endUpdate();
 			}
 		}
-		$wnd.console.log('This is JS console fun'+graph);
+		$wnd.console.log('This is JS console fun -> '+graph);
 		return graph;
 	}-*/;
 }
