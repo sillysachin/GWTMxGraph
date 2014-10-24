@@ -11,7 +11,7 @@ import com.mxgraph.impl.view.MxGraph;
 public class GWTMxGraph implements EntryPoint {
 	public void onModuleLoad() {
 		RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
-		final GWTGraph gwtGraph = new GWTGraph();
+		final GWTMxGraphPanel gwtGraph = new GWTMxGraphPanel();
 		rootLayoutPanel.add(gwtGraph);
 		MxGraph mxGraph = new MxGraph();
 		rootLayoutPanel.add(mxGraph);

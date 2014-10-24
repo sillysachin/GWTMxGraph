@@ -1,6 +1,5 @@
 package com.appbootup.explore.gwt.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
@@ -8,11 +7,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.mxgraph.jso.view.MxGraphJSO;
 
-public class GWTGraph extends Composite {
+public class GWTMxGraphPanel extends Composite {
 	LayoutPanel divWrapper = new LayoutPanel();
-	MxGraphJSO graphJSO;
+	MxGraphJSO graph;
 
-	public GWTGraph() {
+	public GWTMxGraphPanel() {
 		setId(Document.get().createUniqueId());
 		initWidget(divWrapper);
 	}
@@ -29,9 +28,7 @@ public class GWTGraph extends Composite {
 	protected void onLoad() {
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			public void execute() {
-				graphJSO = drawGraph(getId());
-				GWT.log("This is GWT console fun -> " + graphJSO.getDialect());
-				GWT.log("This is GWT console fun -> " + graphJSO.getAllowAutoPanning());
+				graph = drawGraph(getId());
 			}
 		});
 	}
@@ -66,7 +63,6 @@ public class GWTGraph extends Composite {
 				graph.getModel().endUpdate();
 			}
 		}
-		alert('This is drawGraph -> '+graph);
 		return graph;
 	}-*/;
 }
