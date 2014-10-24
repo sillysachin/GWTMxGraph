@@ -2,18 +2,14 @@ package com.mxgraph.impl.view;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.mxgraph.impl.model.MxGraphModel;
+import com.mxgraph.jso.IJavaScriptWrapper;
 import com.mxgraph.jso.view.MxGraphJSO;
 
-public class MxGraph extends Composite
+public class MxGraph extends MxEventSource implements IJavaScriptWrapper
 {
-	MxGraphJSO mxGraphJSO;
-
 	JavaScriptObject graph;
-
-	MxGraphModel model = new MxGraphModel();
 
 	LayoutPanel divWrapper = new LayoutPanel();
 
@@ -21,7 +17,7 @@ public class MxGraph extends Composite
 	{
 		setId( graphContainerId );
 		initWidget( divWrapper );
-		mxGraphJSO = createGraph( graphContainerId );
+		jso = createGraph( graphContainerId );
 	}
 
 	public MxGraph()
@@ -43,16 +39,16 @@ public class MxGraph extends Composite
 	@Override
 	protected void onLoad()
 	{
-		String id = getId();
-		if ( mxGraphJSO == null && id != null )
+		String containerId = getId();
+		if ( jso == null && containerId != null )
 		{
-			mxGraphJSO = createGraph( id );
+			graph = jso = createJso( containerId );
 		}
 	}
 
-	public native MxGraphJSO createGraph( String graphContainer )
+	public native MxGraphJSO createGraph( String containerId )
 	/*-{
-		var container = $doc.getElementById(graphContainer);
+		var container = $doc.getElementById(containerId);
 		var graph = null;
 		// Checks if the browser is supported
 		if (!$wnd.mxClient.isBrowserSupported()) {
@@ -67,22 +63,32 @@ public class MxGraph extends Composite
 		this.@com.mxgraph.impl.view.MxGraph::graph = graph;
 		//this.@com.mxgraph.impl.view.MxGraph::model.setModel(graph.getModel());
 		var model = graph.getModel();
-		alert('This is createGraph  graph.getModel()-'+model);
-		alert('This is createGraph  graph '+graph);
+		alert('This is createGraph  graph.getModel()-' + model);
+		alert('This is createGraph  graph ' + graph);
 		return graph;
+	}-*/;
+
+	private native JavaScriptObject createJso( String containerId ) /*-{
+		var container = $doc.getElementById(containerId);
+		return new $wnd.mxGraph(container);
 	}-*/;
 
 	public native Object getDefaultParent()
 	/*-{
-		var graph = this.@com.mxgraph.impl.view.MxGraph::graph;
-		alert('This is getDefaultParent - '+graph);
-		return graph.getDefaultParent();
+		var parent = @com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(this)
+				.getDefaultParent();
+		var wrapParent = @com.mxgraph.impl.util.WrapperUtils::wrap(Lcom/google/gwt/core/client/JavaScriptObject;)(parent);
+		return wrapParent;
+
+		//var graph = this.@com.mxgraph.impl.view.MxGraph::graph;
+		//return graph.getDefaultParent();
 	}-*/;
 
-	public MxGraphModel getModel()
-	{
-		return this.model;
-	}
+	public native MxGraphModel getModel() /*-{
+		var mxGraphModel = @com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(this)
+				.getModel();
+		return @com.mxgraph.impl.util.WrapperUtils::wrap(Lcom/google/gwt/core/client/JavaScriptObject;)(mxGraphModel);
+	}-*/;
 
 	/**
 	 * Creates and adds a new vertex with an empty style.
@@ -143,11 +149,17 @@ public class MxGraph extends Composite
 	 */
 	public native Object insertVertex( Object parent, String id, Object value, double x, double y, double width, double height, String style, boolean relative )
 	/*-{
-		var vertex = this.@com.mxgraph.impl.view.MxGraph::graph.createVertex(
-				parent, id, value, x, y, width, height, style, relative);
-		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addCell(vertex,
-				parent);
-		alert('This is insertVertex - ' + cell);
+
+		var mxCell = @com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(this)
+				.insertVertex(
+						@com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(parent),
+						id, value, x, y, width, height, style);
+		return @com.mxgraph.impl.util.WrapperUtils::wrap(Lcom/google/gwt/core/client/JavaScriptObject;)(mxCell);
+
+//		var vertex = this.@com.mxgraph.impl.view.MxGraph::graph.createVertex(
+//				parent, id, value, x, y, width, height, style, relative);
+//		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addCell(vertex,
+//				parent);
 		return cell;
 
 	}-*/;
@@ -179,11 +191,11 @@ public class MxGraph extends Composite
 	 */
 	public native Object insertEdge( Object parent, String id, Object value, Object source, Object target, String style )
 	/*-{
-		var edge = this.@com.mxgraph.impl.view.MxGraph::graph.createEdge(
-				parent, id, value, source, target, style);
-		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addEdge(edge,
-				parent, source, target, null)
-		alert('This is insertEdge - ' + cell);
+		var mxCell = @com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(this).insertEdge(
+				@com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(parent), id, value,
+				@com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(source),
+				@com.mxgraph.impl.util.WrapperUtils::unwrap(Lcom/mxgraph/jso/IJavaScriptWrapper;)(target), style);
+		return @com.mxgraph.impl.util.WrapperUtils::wrap(Lcom/google/gwt/core/client/JavaScriptObject;)(mxCell);
 		return cell;
 	}-*/;
 
