@@ -7,31 +7,50 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.mxgraph.impl.model.MxGraphModel;
 import com.mxgraph.jso.view.MxGraphJSO;
 
-public class MxGraph extends Composite {
+public class MxGraph extends Composite
+{
 	MxGraphJSO mxGraphJSO;
+
 	JavaScriptObject graph;
+
 	MxGraphModel model = new MxGraphModel();
+
 	LayoutPanel divWrapper = new LayoutPanel();
 
-	public MxGraph(String graphContainerId) {
-		setId(graphContainerId);
-		mxGraphJSO = createGraph(graphContainerId);
+	public MxGraph( String graphContainerId )
+	{
+		setId( graphContainerId );
+		initWidget( divWrapper );
+		mxGraphJSO = createGraph( graphContainerId );
 	}
 
-	public MxGraph() {
-		setId(Document.get().createUniqueId());
-		mxGraphJSO = createGraph(getId());
+	public MxGraph()
+	{
+		setId( Document.get().createUniqueId() );
+		initWidget( divWrapper );
 	}
 
-	private void setId(String id) {
-		divWrapper.getElement().setId(id);
+	private void setId( String id )
+	{
+		divWrapper.getElement().setId( id );
 	}
 
-	public String getId() {
+	public String getId()
+	{
 		return divWrapper.getElement().getId();
 	}
 
-	public native MxGraphJSO createGraph(String graphContainer)
+	@Override
+	protected void onLoad()
+	{
+		String id = getId();
+		if ( mxGraphJSO == null && id != null )
+		{
+			mxGraphJSO = createGraph( id );
+		}
+	}
+
+	public native MxGraphJSO createGraph( String graphContainer )
 	/*-{
 		var container = $doc.getElementById(graphContainer);
 		var graph = null;
@@ -46,31 +65,36 @@ public class MxGraph extends Composite {
 			graph = new $wnd.mxGraph(container);
 		}
 		this.@com.mxgraph.impl.view.MxGraph::graph = graph;
-		this.@com.mxgraph.impl.view.MxGraph::model.setModel(graph.getModel());
-		$wnd.console.log('This is JS console ultra fun - ' + graph);
+		//this.@com.mxgraph.impl.view.MxGraph::model.setModel(graph.getModel());
+		var model = graph.getModel();
+		alert('This is createGraph  graph.getModel()-'+model);
+		alert('This is createGraph  graph '+graph);
 		return graph;
 	}-*/;
 
 	public native Object getDefaultParent()
 	/*-{
-		return this.@com.mxgraph.impl.view.MxGraph::graph.getDefaultParent();
+		var graph = this.@com.mxgraph.impl.view.MxGraph::graph;
+		alert('This is getDefaultParent - '+graph);
+		return graph.getDefaultParent();
 	}-*/;
 
-	public MxGraphModel getModel() {
+	public MxGraphModel getModel()
+	{
 		return this.model;
 	}
 
 	/**
 	 * Creates and adds a new vertex with an empty style.
 	 */
-	public Object insertVertex(Object parent, String id, Object value,
-			double x, double y, double width, double height) {
-		return insertVertex(parent, id, value, x, y, width, height, null);
+	public Object insertVertex( Object parent, String id, Object value, double x, double y, double width, double height )
+	{
+		return insertVertex( parent, id, value, x, y, width, height, null );
 	}
 
 	/**
 	 * Adds a new vertex into the given parent using value as the user object and the given coordinates as the geometry of the new vertex. The id and style are used for the respective properties of the new cell, which is returned.
-	 * 
+	 *
 	 * @param parent
 	 *            Cell that specifies the parent of the new vertex.
 	 * @param id
@@ -89,15 +113,14 @@ public class MxGraph extends Composite {
 	 *            Optional string that defines the cell style.
 	 * @return Returns the new vertex that has been inserted.
 	 */
-	public Object insertVertex(Object parent, String id, Object value,
-			double x, double y, double width, double height, String style) {
-		return insertVertex(parent, id, value, x, y, width, height, style,
-				false);
+	public Object insertVertex( Object parent, String id, Object value, double x, double y, double width, double height, String style )
+	{
+		return insertVertex( parent, id, value, x, y, width, height, style, false );
 	}
 
 	/**
 	 * Adds a new vertex into the given parent using value as the user object and the given coordinates as the geometry of the new vertex. The id and style are used for the respective properties of the new cell, which is returned.
-	 * 
+	 *
 	 * @param parent
 	 *            Cell that specifies the parent of the new vertex.
 	 * @param id
@@ -118,15 +141,13 @@ public class MxGraph extends Composite {
 	 *            Specifies if the geometry should be relative.
 	 * @return Returns the new vertex that has been inserted.
 	 */
-	public native Object insertVertex(Object parent, String id, Object value,
-			double x, double y, double width, double height, String style,
-			boolean relative)
+	public native Object insertVertex( Object parent, String id, Object value, double x, double y, double width, double height, String style, boolean relative )
 	/*-{
 		var vertex = this.@com.mxgraph.impl.view.MxGraph::graph.createVertex(
 				parent, id, value, x, y, width, height, style, relative);
 		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addCell(vertex,
 				parent);
-		$wnd.console.log('This is JS console insertVertex. ' + cell);
+		alert('This is insertVertex - ' + cell);
 		return cell;
 
 	}-*/;
@@ -134,14 +155,14 @@ public class MxGraph extends Composite {
 	/**
 	 * Creates and adds a new edge with an empty style.
 	 */
-	public Object insertEdge(Object parent, String id, Object value,
-			Object source, Object target) {
-		return insertEdge(parent, id, value, source, target, null);
+	public Object insertEdge( Object parent, String id, Object value, Object source, Object target )
+	{
+		return insertEdge( parent, id, value, source, target, null );
 	}
 
 	/**
 	 * Adds a new edge into the given parent using value as the user object and the given source and target as the terminals of the new edge. The Id and style are used for the respective properties of the new cell, which is returned.
-	 * 
+	 *
 	 * @param parent
 	 *            Cell that specifies the parent of the new edge.
 	 * @param id
@@ -156,14 +177,13 @@ public class MxGraph extends Composite {
 	 *            Optional string that defines the cell style.
 	 * @return Returns the new edge that has been inserted.
 	 */
-	public native Object insertEdge(Object parent, String id, Object value,
-			Object source, Object target, String style)
+	public native Object insertEdge( Object parent, String id, Object value, Object source, Object target, String style )
 	/*-{
 		var edge = this.@com.mxgraph.impl.view.MxGraph::graph.createEdge(
 				parent, id, value, source, target, style);
-		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addEdge(edge, parent,
-				source, target, null)
-		$wnd.console.log('This is JS console insertEdge. ' + cell);
+		var cell = this.@com.mxgraph.impl.view.MxGraph::graph.addEdge(edge,
+				parent, source, target, null)
+		alert('This is insertEdge - ' + cell);
 		return cell;
 	}-*/;
 

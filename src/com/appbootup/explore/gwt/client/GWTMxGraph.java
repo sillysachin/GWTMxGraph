@@ -14,13 +14,13 @@ public class GWTMxGraph implements EntryPoint {
 		final GWTGraph gwtGraph = new GWTGraph();
 		rootLayoutPanel.add(gwtGraph);
 		MxGraph mxGraph = new MxGraph();
-		Object parent = mxGraph.getDefaultParent();
 		rootLayoutPanel.add(mxGraph);
+		Object parent = mxGraph.getDefaultParent();
 		MxGraphModel model = mxGraph.getModel();
-		model.beginUpdate();
+		//model.beginUpdate();
 		Object v1 = mxGraph.insertVertex(parent, null, "Hell,", 40, 40, 160, 60);
 		Object v2 = mxGraph.insertVertex(parent, null, "Word!", 400, 300, 160, 60);
 		Object e1 = mxGraph.insertEdge(parent, null, "", v1, v2);
-		model.endUpdate();
+		//model.endUpdate();
 	}
 }
